@@ -1,0 +1,59 @@
+//Mixins
+
+@mixin banner{
+    width: 100%;
+    position: relative;
+    color: white;
+    .banner-content {
+        position: absolute;
+        top: 50px;
+        width: 100%;
+    }
+    img {
+        width: 100%;
+    }
+    span {
+        font-size: $bannerHeading;
+        display: block;
+        text-transform: uppercase;
+        font-weight: bold;
+        @include mediaQuery(2500px, 1000px){
+            font-size:70px;
+        }
+    }
+    span .title {
+        font-weight: normal;
+        margin-bottom: 30px;
+    }
+}
+
+@mixin clearFix {
+    &:after {
+        content: "";                     //insert at end of ul
+        display: block;
+        clear: both ;                   //clear all li tags that come before it
+    }
+}
+
+@mixin grid($cols, $mrgn){
+    float: left;
+    margin-right: $mrgn;
+    margin-left: $mrgn;
+    width: ((100% - (($cols - 1) * $mrgn)) / $cols );
+    &:nth-child(#{$cols}n){               //no right margin for the right-most box
+        margin-right:0;
+    }
+}
+
+@mixin mediaQuery($args...) {
+    @if(length($args) == 1) {
+        @media screen and (max-width: nth($args, 1)){
+            @content;
+        }
+    }
+    @if(length($args) == 2) {
+        @media screen and (max-width: nth($args, 1)) and (min-width: nth($args, 2)) {
+            @content;
+        }
+    } 
+}
